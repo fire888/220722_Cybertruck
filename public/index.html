@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scheme</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name='viewport' content='width=device-width, user-scalable=no'>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    *:focus {
+      outline: 0 !important;
+    }
+    body {
+      overflow: hidden;
+      /*font-family: Geneva, Arial, Helvetica, sans-serif;*/
+      font-family: 'Roboto Mono' monospace;
+    }
+    .start-screen {
+      color: #c6c9a7;;
+      position: absolute;
+      z-index: 100;
+      /*background: linear-gradient(to top, #1e2c19 60%, #c6c9a7 60%); */
+      background: linear-gradient(to top, #001115 60%, #001218 60%);
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
+    .load-container {
+      margin-top: 5vh; 
+      min-width: 100%;
+      text-align: center;
+      min-height: 60px;
+    }
+    .progress-wrapper {
+      max-width: 50vw;
+      transform: translate(50%, 0);
+      margin-top: 10px; 
+      min-height: 5px;
+      overflow: hidden;
+      border-radius: 5px;
+      border: #2e7106 1px solid;
+    }
+    .progress {
+      width: 200%;
+      min-height: 5px;
+      background: url(imgs/progress-img.png);
+      margin-left: -100%; 
+    }
+    .start { 
+      width: 100%;
+      background: #c6c9a7;
+      color: #2a2932;
+      min-height: 50px;
+      font-size: 20px;
+      border: 2px solid #c6c9a7;
+      border-radius: 2px;
+      transition: 0.2s;  
+    }
+    .start:hover {
+      background: #1e2c19;
+      color: #c6c9a7;
+      cursor: pointer;
+    }
+    .canvas-wrapper {
+      /*width: 100vw;*/
+      /*height: 100vh;*/
+      /*overflow: hidden;*/
+    }
+    .app-title {
+      position: absolute;
+      z-index: 80;
+      background-color: #FFFFFF88;
+      color: rgba(0, 0, 0, 0.767);
+      left: 5px;
+      top: 5px;
+      padding: 3px 10px 3px 10px;
+      text-align: right;
+      min-width: 250px;
+      font-family: 'Gill Sans';
+      font-weight: bold;
+      font-size: 20px;
+      border: 1px solid #000000;
+    }
+    .path-cont-area {
+      position: absolute;
+      z-index: 100;
+      right: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      max-height: 100vh;
+      background-color: #264744;
+      overflow: hidden;
+        min-width: 140px;
+    }
+    .path-cont {
+      display: flex;
+      flex-direction: row;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding-right: 5px;
+      padding-left: 5px;
+      background-color: #264744;
+    }
+    .path-cont button {
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .cont-column {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
+    .red {
+      background-color: #c2c024;
+      color: #042f19;
+      font-weight: bold;
+    }
+    #mapbox-wrapper {
+      position: absolute;
+      z-index: 99;
+      top: 0;
+      left: 0;
+      width: 30vw;
+      height: 30vh;
+    }
+
+    .floors-cont {
+      position: absolute;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+    }
+
+    .choise-wrapper {
+      position: absolute;
+      z-index: 110;
+      left: 200px;
+      top: 100px;
+      color:rgba(199, 12, 12, 0.767); 
+      min-width: 100px;
+      background-color: #192c2a;
+      border: #234443 1px solid;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fly-button {
+      position: absolute;
+      bottom: -5px;
+      min-width: 100px;
+      min-height: 50px;
+      transform: translate(-50%, 0);
+      left: 50vw;
+      z-index: 110;
+      align-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      display: flex;
+    }
+
+    button {
+      color: #a3ffb2;
+      background-color: #264744;
+      border: 1px solid #3e726f;
+      border-bottom: 1px solid #1a2536;
+      border-radius: 3px;
+      padding: 5px 3px;
+      min-width: 60px;
+      cursor: pointer;
+    }
+
+    /** SCROLL BAR *********************/
+
+    div::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px #CA14291F;
+      border-radius: 10px;
+      background-color: #CA14291F;
+    }
+
+    div::-webkit-scrollbar {
+      width: 7px;
+      background-color: rgba(20, 41, 31, 0.795);
+    }
+
+    div::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px #4be8d6;
+      background-color: #34c68e;
+    }
+  </style>
+</head>
+<body>
+  <div class='start-screen'>
+
+      <div class = "load-container">
+        <button class="start" style="display: none;">Start</button>
+        <div class="load-wrapper">
+<!--          <p>loading</p>-->
+          <div class="progress-wrapper">
+            <div class="progress"></div> 
+          </div>
+        </div>  
+      </div>
+  </div>
+  <div class="canvas-wrapper">
+    <canvas id='webgl-canvas'></canvas>
+  </div>
+  <div id="mapbox-wrapper"></div>
+</body>
+</html>
