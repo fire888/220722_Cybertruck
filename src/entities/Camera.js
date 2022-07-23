@@ -10,13 +10,11 @@ export const createCamera = (root) => {
     camera.position.set(0, 100, 400)
     camera.lookAt(new THREE.Vector3())
 
-
-    //const controls = new MapControls(camera, studio.getRenderer().domElement)
     const controls = new OrbitControls(camera, studio.getRenderer().domElement)
     controls.target.set( 0, 0, 0)
 
     controls.minDistance = 10
-    controls.maxDistance = 500
+    controls.maxDistance = 1500
     controls.maxPolarAngle = Math.PI / 2
 
 

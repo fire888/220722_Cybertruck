@@ -19,20 +19,18 @@ export const createCyberTruck = (root) => {
 
     for (let i = 0; i < arrPointsMeshes.length; ++i) {
         const { cityLen } = root.appData
-        console.log(cityLen)
-        arrPointsMeshes[i].position.x += Math.floor((cityLen / 2)) * SEGMENT_SIZE[0]
-        arrPointsMeshes[i].position.z += Math.floor((cityLen / 2)) * SEGMENT_SIZE[1]
-        arrPointsMeshes[i].position.y = 0
-        root.studio.addToScene(arrPointsMeshes[i])
         arrPointsMeshes[i].geometry.computeBoundingSphere()
-        arrPoints.push(new THREE.Vector3(
-            arrPointsMeshes[i].geometry.boundingSphere.center.x,
+        const v = new THREE.Vector3(
+            arrPointsMeshes[i].geometry.boundingSphere.center.x + Math.floor((cityLen / 2)) * SEGMENT_SIZE[0],
             arrPointsMeshes[i].geometry.boundingSphere.center.y,
-            arrPointsMeshes[i].geometry.boundingSphere.center.z,
-        ))
-    }
+            arrPointsMeshes[i].geometry.boundingSphere.center.z + Math.floor((cityLen / 2)) * SEGMENT_SIZE[1],
+        )
+        arrPoints.push(v)
 
-    console.log(arrPoints)
+        if (i === 0) {
+            root.appData.startCarPoint = v
+        }
+    }
 
 
     const truck = root.assets.cyberTruck.scene.children[0]
