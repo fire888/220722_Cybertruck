@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { SEGMENT_SIZE } from '../constants/constants_assetsToLoad'
 
 const MODEL_KEYS = [
     'build_01',
@@ -21,15 +22,8 @@ for (let i = 0; i < 1500; ++i) {
 const L = Math.sqrt(TOWN.length)
 
 
-const SEGMENT_SIZE = [40, 30]
-//const SEGMENT_SIZE = [10, 20]
-
-
-
-
-
-
 export const createTown = root => {
+    root.appData.cityLen  = L
     const mats = {
         'build_01': new THREE.MeshPhongMaterial({
             map: root.assets.b01Map,

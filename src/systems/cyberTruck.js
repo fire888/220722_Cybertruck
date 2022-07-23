@@ -1,4 +1,4 @@
-
+import { SEGMENT_SIZE } from '../constants/constants_assetsToLoad'
 
 export const createCyberTruck = (root) => {
     const arrPointsMeshes = []
@@ -18,7 +18,12 @@ export const createCyberTruck = (root) => {
     const arrPoints = []
 
     for (let i = 0; i < arrPointsMeshes.length; ++i) {
-        //root.studio.addToScene(arrPointsMeshes[i])
+        const { cityLen } = root.appData
+        console.log(cityLen)
+        arrPointsMeshes[i].position.x += Math.floor((cityLen / 2)) * SEGMENT_SIZE[0]
+        arrPointsMeshes[i].position.z += Math.floor((cityLen / 2)) * SEGMENT_SIZE[1]
+        arrPointsMeshes[i].position.y = 0
+        root.studio.addToScene(arrPointsMeshes[i])
         arrPointsMeshes[i].geometry.computeBoundingSphere()
         arrPoints.push(new THREE.Vector3(
             arrPointsMeshes[i].geometry.boundingSphere.center.x,
@@ -26,6 +31,8 @@ export const createCyberTruck = (root) => {
             arrPointsMeshes[i].geometry.boundingSphere.center.z,
         ))
     }
+
+    console.log(arrPoints)
 
 
     const truck = root.assets.cyberTruck.scene.children[0]
@@ -51,11 +58,6 @@ export const createCyberTruck = (root) => {
     let numsToUpdate = 0
     let currentNumUpdate = 0
     let spd = 0.4
-    let spdRot = 0.05
-    let phaseRot = 0
-
-    const oldQ = new THREE.Quaternion()
-    const newQ = new THREE.Quaternion()
 
 
     const generateDataForMove = () => {
@@ -80,28 +82,54 @@ export const createCyberTruck = (root) => {
 
         spdX = (nextPos.x - currentPos.x) / numsToUpdate
         spdZ = (nextPos.z - currentPos.z) / numsToUpdate
-
-
-        oldQ.copy(tr.quaternion)
-        tr.lookAt(nextPos)
-        newQ.copy(tr.quaternion)
-        tr.quaternion.copy(oldQ)
-        phaseRot = 0
     }
 
     generateDataForMove()
+
+
+    const savePos = new THREE.Vector3()
+    const oldQ = new THREE.Quaternion()
+    const newQ = new THREE.Quaternion()
+    let spdRot = 0.05
+    let phaseRot = 0
+
+    const generateDataForRot = () => {
+        let nextNextPos
+        if (!arrPoints[nextIndexPath + 1]) {
+            nextNextPos = arrPoints[0]
+        } else {
+            nextNextPos = arrPoints[nextIndexPath + 1]
+        }
+
+        savePos.copy(tr.position)
+        tr.position.copy(arrPoints[nextIndexPath])
+        oldQ.copy(tr.quaternion)
+        tr.lookAt(nextNextPos)
+        newQ.copy(tr.quaternion)
+        tr.quaternion.copy(oldQ)
+        tr.position.copy(savePos)
+
+        phaseRot = 0
+    }
+
+    generateDataForRot()
 
     return {
         update: () => {
             if (phaseRot < 1) {
                 phaseRot += spdRot
                 tr.quaternion.slerpQuaternions(oldQ, newQ, Math.min(1, phaseRot))
+            } else {
+                phaseRot = 1
             }
             tr.position.x += spdX
             tr.position.z += spdZ
             ++currentNumUpdate
             if (currentNumUpdate > numsToUpdate) {
                 generateDataForMove()
+            }
+            if (phaseRot === 1 && currentNumUpdate + 5 > numsToUpdate) {
+                generateDataForRot()
             }
         }
     }

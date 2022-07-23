@@ -14,6 +14,7 @@ import b01ImgSrc from '../assets/mapTown01.jpg'
 import b02ImgSrc from '../assets/mapTown02.jpg'
 
 
+export const SEGMENT_SIZE = [40, 30]
 
 export const ASSETS_TO_LOAD = [
     {

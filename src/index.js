@@ -14,7 +14,9 @@ import { createCyberTruck } from  './systems/cyberTruck'
 import { createTown } from './systems/town'
 
 
-const root = {}
+const root = {
+  appData: {}
+}
 
 
 /** INIT  ***********************************************************/
