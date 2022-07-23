@@ -58,7 +58,6 @@ export function createLoadManager () {
             gltfLoader.setDRACOLoader( dracoLoader )
 
             gltfLoader.load(data.filename, model => {
-                console.log(model)
                 assets[data.key] = model
                 checkComplete()
             })

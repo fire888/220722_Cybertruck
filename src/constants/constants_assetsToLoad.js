@@ -9,15 +9,18 @@ import '../assets/progress-img.png'
 import cyberTruckSrc from '../assets/cyber_truck/scene.gltf'
 import '../assets/cyber_truck/scene.bin'
 
+import townSrc from '../assets/town.obj'
+import b01ImgSrc from '../assets/mapTown01.jpg'
+import b02ImgSrc from '../assets/mapTown02.jpg'
 
 
 
 export const ASSETS_TO_LOAD = [
-    // {
-    //     type: 'obj',
-    //     filename: floor01Src,
-    //     key: 'floor01'
-    // },
+    {
+        type: 'obj',
+        filename: townSrc,
+        key: 'town'
+    },
     {
         type: 'gltfBin',
         filename: cyberTruckSrc,
@@ -37,11 +40,16 @@ export const ASSETS_TO_LOAD = [
     //     key: 'floor01'
     // },
 
-    // {
-    //     type: 'img',
-    //     filename: view1Src,
-    //     key: 'view1'
-    // },
+    {
+        type: 'img',
+        filename: b01ImgSrc,
+        key: 'b01Map'
+    },
+    {
+        type: 'img',
+        filename: b02ImgSrc,
+        key: 'b02Map'
+    },
     // {
     //     type: 'img',
     //     filename: view2Src,

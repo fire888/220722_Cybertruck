@@ -7,6 +7,8 @@ export function startFrameUpater (eventEmitter) {
     var oldTime;
     var count = 0;
 
+    let fn = () => {}
+
 
     var animate = function () {
         requestAnimationFrame(animate)
@@ -18,14 +20,19 @@ export function startFrameUpater (eventEmitter) {
         }
         count += delta;
 
-        emitter.emit('frameUpdate', { time, delta , count })
+        fn(time, delta, count)
+        //emitter.emit('frameUpdate', { time, delta , count })
 
         oldTime = time;
     } 
 
     animate();
 
-    return {}
+    return {
+        on: f => {
+            fn = f
+        }
+    }
 }
 
 
