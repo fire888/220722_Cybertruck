@@ -1,11 +1,7 @@
-export function startFrameUpater (eventEmitter) {
-
-    var emitter = eventEmitter;
-
-    var delta;
-    var time;
-    var oldTime;
-    var count = 0;
+export function startFrameUpater () {
+    var delta
+    var time
+    var oldTime
 
     const fns = []
 
@@ -13,15 +9,11 @@ export function startFrameUpater (eventEmitter) {
     var animate = function () {
         requestAnimationFrame(animate)
       
-        time = Date.now();
-        delta = (time - oldTime) * 0.001;
-        if (isNaN(delta) || delta > 1000 || delta == 0 ) {
-            delta = 1000/60 * 0.001;
-        }
-        count += delta;
-
+        time = Date.now()
+        delta = (time - oldTime)
+        const n = Math.round(delta / 16)    
         for (let i = 0; i < fns.length; ++i) {
-            fns[i](time, delta, count)
+            fns[i](n)
         }
         oldTime = time;
     } 

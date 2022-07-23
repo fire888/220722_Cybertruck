@@ -39,6 +39,7 @@ export function createPlayer (root) {
 
     root.keyboard.on(data => {
         keys = data
+        console.log(data)
     })
 
     root.studio.addToScene(mainObj)
@@ -48,7 +49,7 @@ export function createPlayer (root) {
 
 
     return {
-        update: () => {
+        update: n => {
             if ( !keys || !isOn ) {
                 return;
             }
@@ -76,15 +77,15 @@ export function createPlayer (root) {
                     return;
                 }
 
-                mainObj.translateZ(-speed)
+                mainObj.translateZ(-speed * n)
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }
             if (keys['left'] === true) {
-                 mainObj.rotation.y += 0.02
+                 mainObj.rotation.y += 0.02 * n
             }
             if (keys['right'] === true) {
-                mainObj.rotation.y -= 0.02
+                mainObj.rotation.y -= 0.02 * n
             }
         },
 
@@ -95,6 +96,4 @@ export function createPlayer (root) {
         getCollisionMesh: () => collisionBox
     }
 }
-
-
 

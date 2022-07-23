@@ -12,6 +12,8 @@ import { ASSETS_TO_LOAD } from './constants/constants_assetsToLoad'
 import { createCyberTruck } from  './systems/cyberTruck'
 import { createTown } from './systems/town'
 
+import Stats from 'three/examples/jsm/libs/stats.module.js';
+
 
 const root = {
   appData: {}
@@ -32,6 +34,10 @@ const initApp = () => {
 
   root.loadManager = new createLoadManager()
   root.loadManager.startLoad(ASSETS_TO_LOAD).then(assets => {
+    const stats = new Stats()
+    const container = document.querySelector('.canvas-wrapper')
+    container.appendChild(stats.dom)
+    
     root.assets = assets
     root.town = createTown(root)
     root.cyberTruck = createCyberTruck(root)
@@ -41,10 +47,11 @@ const initApp = () => {
 
 
     root.frameUpdater = startFrameUpater(root)
-    root.frameUpdater.on(() => {
-      root.player.update()
-      root.cyberTruck.update()
+    root.frameUpdater.on(n => {
+      root.player.update(n)
+      root.cyberTruck.update(n)
       root.studio.render()
+      stats.update()
     })
     hideStartScreen()
   })

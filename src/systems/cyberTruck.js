@@ -128,10 +128,8 @@ export const createCyberTruck = (root) => {
         phaseRot = 0
     }
 
-    generateDataForRot()
-
     return {
-        update: () => {
+        update: n => {
             const [is] = collision.checkCollisions(centerObj, frontObj, 10)
             if (is) {
                 return;
@@ -139,14 +137,14 @@ export const createCyberTruck = (root) => {
 
 
             if (phaseRot < 1) {
-                phaseRot += spdRot
+                phaseRot += (spdRot * n)
                 tr.quaternion.slerpQuaternions(oldQ, newQ, Math.min(1, phaseRot))
             } else {
                 phaseRot = 1
             }
-            tr.position.x += spdX
-            tr.position.z += spdZ
-            ++currentNumUpdate
+            tr.position.x += (spdX * n)
+            tr.position.z += (spdZ * n)
+            currentNumUpdate += (1 * n)
             if (currentNumUpdate > numsToUpdate) {
                 generateDataForMove()
             }
