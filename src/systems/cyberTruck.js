@@ -49,12 +49,20 @@ export const createCyberTruck = (root) => {
         //tr.add(test)
     }
 
+    const collBox = new THREE.Mesh(
+        new THREE.BoxGeometry(4, 5, 6),
+        new THREE.MeshBasicMaterial()
+    )
+    collBox.position.z = -3
+    collBox.visible = false
+    tr.add(collBox)
+
     const frontObj = new THREE.Object3D()
-    frontObj.position.set(0, 2, -3)
+    frontObj.position.set(0, 1, -3)
     tr.add(frontObj)
 
     const centerObj = new THREE.Object3D()
-    centerObj.position.set(0, 2, 0)
+    centerObj.position.set(0, 1, 0)
     tr.add(centerObj)
 
     const collision = new helper_CollisionsItems_v02()
@@ -148,6 +156,8 @@ export const createCyberTruck = (root) => {
         },
         setPlayerToCollisions: (mesh) => {
             collision.setItemToCollision(mesh)
-        }
+            console.log(collision.getArr())
+        },
+        getCollBox: () => collBox,
     }
 }

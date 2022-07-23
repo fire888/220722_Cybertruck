@@ -23,8 +23,8 @@ export function createPlayer (root) {
     mainObj.add(camera)
 
     const collisionBox = new THREE.Mesh(
-        new THREE.BoxGeometry(10, 10, 10),
-        new THREE.MeshBasicMaterial()
+        new THREE.BoxGeometry(15, 10, 15),
+        new THREE.MeshBasicMaterial({ side: THREE.DoubleSide })
     )
     collisionBox.visible = false
     root.studio.addToScene(collisionBox)
@@ -67,6 +67,7 @@ export function createPlayer (root) {
                     collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
                     collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
                     collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
+                    collisions.setItemToCollision(root.cyberTruck.getCollBox())
                     savedPlayerSegmentKey = k
                 }
 
@@ -76,7 +77,8 @@ export function createPlayer (root) {
                 }
 
                 mainObj.translateZ(-speed)
-                collisionBox.position.copy(mainObj.position)
+                collisionBox.position.x = mainObj.position.x
+                collisionBox.position.z = mainObj.position.z
             }
             if (keys['left'] === true) {
                  mainObj.rotation.y += 0.02

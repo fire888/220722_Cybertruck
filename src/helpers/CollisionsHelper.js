@@ -35,11 +35,14 @@ export class helper_CollisionsItems_v02 {
         objTo.getWorldPosition(this._vecDir)
         this._vecDir.sub(this._vecStart)
         const intersects = this._rayCaster.intersectObjects(this._arrMeshes)
-        console.log(intersects)
 
         if (intersects[0] && intersects[0].distance < dist) {
             return [ true, intersects[0] ]
         }
         return [ false, null ]
+    }
+
+    getArr () {
+        return this._arrMeshes
     }
 }
