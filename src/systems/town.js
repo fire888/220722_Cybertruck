@@ -60,7 +60,7 @@ export const createTown = root => {
         }
     })
 
-    const items = []
+    const items = {}
 
     for (let i = 0; i < TOWN.length; ++i) {
         if (!instItems[MODEL_KEYS[TOWN[i]]]) {
@@ -68,8 +68,10 @@ export const createTown = root => {
         }
 
 
-        const x = Math.floor(i % L ) * SEGMENT_SIZE[0]
-        const z = -Math.floor(i / L ) *  SEGMENT_SIZE[1]
+        const numX = Math.floor(i % L )
+        const numZ = Math.floor(i / L )
+        const x = numX * SEGMENT_SIZE[0]
+        const z = -numZ * SEGMENT_SIZE[1]
 
 
         const road = new THREE.Mesh(
@@ -104,8 +106,26 @@ export const createTown = root => {
         b.position.z = -z
         root.studio.addToScene(b)
 
-        items.push({ r: road, w: walkRoad })
+        const bCollision = new THREE.Mesh(
+            instItems['collision_b_01'].geometry,
+            mats['default']
+        )
+        bCollision.position.x = x
+        bCollision.position.z = -z
+        bCollision.visible = false
+        root.studio.addToScene(bCollision)
+
+        items[`${numX}_${numZ}`] = {
+            r: road,
+            w: walkRoad,
+            b: b,
+            bCollision: bCollision,
+            numX,
+            numZ,
+        }
     }
+
+    root.appData.town = items
 
     return {}
 }

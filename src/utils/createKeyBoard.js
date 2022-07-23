@@ -1,6 +1,7 @@
 export function createKeyBoard (eventEmitter) {
     
-    const emitter = eventEmitter
+   // const emitter = eventEmitter
+    const fns = []
 
     const keys = {
         'up': false,
@@ -32,7 +33,10 @@ export function createKeyBoard (eventEmitter) {
             keys['w'] = isDown
             break
         }
-        emitter.emit('keyEvent', keys)
+        for (let i = 0; i < fns.length; ++i) {
+            fns[i](keys)
+        }
+        //emitter.emit('keyEvent', keys)
     }
 
     document.addEventListener( 'keydown', 
@@ -41,35 +45,46 @@ export function createKeyBoard (eventEmitter) {
       function(event) { keyUpdate( event.keyCode, false )}.bind(this) )
 
     const buttLeft = document.querySelector('.butt-left')
-    buttLeft.addEventListener('mousedown', 
-      function() { keyUpdate( 37, true ) })
-    buttLeft.addEventListener('mouseup', 
-      function() { keyUpdate( 37, false ) })   
-    buttLeft.addEventListener('touchstart',
-        function() { keyUpdate( 37, true ) })
-    buttLeft.addEventListener('touchend', 
-        function() { keyUpdate( 37, false ) })       
+    if (buttLeft) {
+        buttLeft.addEventListener('mousedown',
+            function() { keyUpdate( 37, true ) })
+        buttLeft.addEventListener('mouseup',
+            function() { keyUpdate( 37, false ) })
+        buttLeft.addEventListener('touchstart',
+            function() { keyUpdate( 37, true ) })
+        buttLeft.addEventListener('touchend',
+            function() { keyUpdate( 37, false ) })
+    }
+
     
     const buttRight = document.querySelector('.butt-right')
-    buttRight.addEventListener('mousedown', 
-      function() { keyUpdate( 39, true ) })
-    buttRight.addEventListener('mouseup', 
-      function() { keyUpdate( 39, false ) })
-    buttRight.addEventListener('touchstart', 
-      function() { keyUpdate( 39, true ) })
-    buttRight.addEventListener('touchend', 
-      function() { keyUpdate( 39, false ) })         
+    if (buttRight) {
+        buttRight.addEventListener('mousedown',
+            function() { keyUpdate( 39, true ) })
+        buttRight.addEventListener('mouseup',
+            function() { keyUpdate( 39, false ) })
+        buttRight.addEventListener('touchstart',
+            function() { keyUpdate( 39, true ) })
+        buttRight.addEventListener('touchend',
+            function() { keyUpdate( 39, false ) })
+    }
+
         
     const buttUp = document.querySelector('.butt-front')
-    buttUp.addEventListener('mousedown', 
-      function() { keyUpdate( 38, true ) })
-    buttUp.addEventListener('mouseup', 
-      function() { keyUpdate( 38, false ) })
-    buttUp.addEventListener('touchstart', 
-      function() { keyUpdate( 38, true ) })
-    buttUp.addEventListener('touchend', 
-      function() { keyUpdate( 38, false ) })   
+    if (buttUp) {
+        buttUp.addEventListener('mousedown',
+            function() { keyUpdate( 38, true ) })
+        buttUp.addEventListener('mouseup',
+            function() { keyUpdate( 38, false ) })
+        buttUp.addEventListener('touchstart',
+            function() { keyUpdate( 38, true ) })
+        buttUp.addEventListener('touchend',
+            function() { keyUpdate( 38, false ) })
+    }
 
-
-   return {}   
+   return {
+        on: f => {
+            fns.push(f)
+        }
+   }
 }

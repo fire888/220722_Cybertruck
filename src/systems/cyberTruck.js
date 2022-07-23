@@ -1,4 +1,6 @@
 import { SEGMENT_SIZE } from '../constants/constants_assetsToLoad'
+import * as THREE from 'three'
+import { helper_CollisionsItems_v02 } from '../helpers/CollisionsHelper'
 
 export const createCyberTruck = (root) => {
     const arrPointsMeshes = []
@@ -35,7 +37,7 @@ export const createCyberTruck = (root) => {
 
     const truck = root.assets.cyberTruck.scene.children[0]
     truck.scale.set(.01, .01, .01)
-    truck.position.y = -2
+    truck.position.y = -2.4
     truck.position.z = 2
     truck.rotation.z = Math.PI / 2
 
@@ -47,7 +49,15 @@ export const createCyberTruck = (root) => {
         //tr.add(test)
     }
 
+    const frontObj = new THREE.Object3D()
+    frontObj.position.set(0, 2, -3)
+    tr.add(frontObj)
 
+    const centerObj = new THREE.Object3D()
+    centerObj.position.set(0, 2, 0)
+    tr.add(centerObj)
+
+    const collision = new helper_CollisionsItems_v02()
 
     let currentIndexPath = 0
     let nextIndexPath = 1
@@ -114,6 +124,12 @@ export const createCyberTruck = (root) => {
 
     return {
         update: () => {
+            const [is] = collision.checkCollisions(centerObj, frontObj, 10)
+            if (is) {
+                return;
+            }
+
+
             if (phaseRot < 1) {
                 phaseRot += spdRot
                 tr.quaternion.slerpQuaternions(oldQ, newQ, Math.min(1, phaseRot))
@@ -129,6 +145,9 @@ export const createCyberTruck = (root) => {
             if (phaseRot === 1 && currentNumUpdate + 5 > numsToUpdate) {
                 generateDataForRot()
             }
+        },
+        setPlayerToCollisions: (mesh) => {
+            collision.setItemToCollision(mesh)
         }
     }
 }

@@ -125,7 +125,7 @@ export function createStudio (emitterLink) {
     setCamera: cam => {
       camera = cam
       camera.add(light)
-      scene.add(camera)
+      //scene.add(camera)
     },
 
     getRenderer() {

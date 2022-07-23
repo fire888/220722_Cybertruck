@@ -7,7 +7,7 @@ export function startFrameUpater (eventEmitter) {
     var oldTime;
     var count = 0;
 
-    let fn = () => {}
+    const fns = []
 
 
     var animate = function () {
@@ -20,17 +20,17 @@ export function startFrameUpater (eventEmitter) {
         }
         count += delta;
 
-        fn(time, delta, count)
-        //emitter.emit('frameUpdate', { time, delta , count })
-
+        for (let i = 0; i < fns.length; ++i) {
+            fns[i](time, delta, count)
+        }
         oldTime = time;
     } 
 
-    animate();
+    animate()
 
     return {
         on: f => {
-            fn = f
+            fns.push(f)
         }
     }
 }
