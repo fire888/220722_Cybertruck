@@ -48,6 +48,12 @@ export const createTown = root => {
         }),
         'default': new THREE.MeshPhongMaterial({
             color: 0x6666FF,
+            envMap: root.assets.skyBox,
+            reflectivity: .1,
+            shininess: 50,
+            bumpMap: root.assets.bumpMap,
+            bumpScale: .1,
+
         }),
     }
 
@@ -59,6 +65,14 @@ export const createTown = root => {
             instItems[item.name] = item
         }
     })
+
+    console.log(instItems)
+
+    const ground = new THREE.Mesh(
+        instItems['ground'].geometry,
+        mats['default']
+    )
+    root.studio.addToScene(ground)
 
     const items = {}
 
@@ -74,13 +88,13 @@ export const createTown = root => {
         const z = -numZ * SEGMENT_SIZE[1]
 
 
-        const road = new THREE.Mesh(
-            instItems['road'].geometry,
-            mats['default']
-        )
-        road.position.x = x
-        road.position.z = -z
-        root.studio.addToScene(road)
+        // const road = new THREE.Mesh(
+        //     instItems['road'].geometry,
+        //     mats['default']
+        // )
+        // road.position.x = x
+        // road.position.z = -z
+        // root.studio.addToScene(road)
 
         const walkRoad = new THREE.Mesh(
             instItems['walk_road'].geometry,
@@ -116,7 +130,7 @@ export const createTown = root => {
         root.studio.addToScene(bCollision)
 
         items[`${numX}_${numZ}`] = {
-            r: road,
+            //r: road,
             w: walkRoad,
             b: b,
             bCollision: bCollision,

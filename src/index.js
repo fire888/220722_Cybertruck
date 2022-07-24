@@ -34,6 +34,7 @@ const initApp = () => {
 
   root.loadManager = new createLoadManager()
   root.loadManager.startLoad(ASSETS_TO_LOAD).then(assets => {
+    root.studio.setBack(assets.skyBox)
     const stats = new Stats()
     const container = document.querySelector('.canvas-wrapper')
     container.appendChild(stats.dom)
@@ -53,9 +54,11 @@ const initApp = () => {
       root.studio.render()
       stats.update()
     })
-    hideStartScreen(root, () => {
-      root.keyboard.show()
-    })
+    setTimeout(() => {
+      hideStartScreen(root, () => {
+        root.keyboard.show()
+      })
+    }, 15)
   })
 }
 

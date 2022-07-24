@@ -10,10 +10,11 @@ export function createPlayer (root) {
     const mainObj = new THREE.Object3D()
     const { startCarPoint } = root.appData
     mainObj.position.set(
-        startCarPoint.toArray()[0] + (SEGMENT_SIZE[0] * 2),
+        startCarPoint.toArray()[0] + (SEGMENT_SIZE[0] * 4),
         startCarPoint.toArray()[1],
-        startCarPoint.toArray()[2] + 10,
+        startCarPoint.toArray()[2],
     )
+    mainObj.rotation.y = Math.PI / 2
 
     const camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 )
     camera.position.set(0, 1.8, 0)
@@ -34,9 +35,11 @@ export function createPlayer (root) {
     backObj.position.set(0, 1.8, 1)
     mainObj.add(backObj)
 
-    const light = new THREE.PointLight(0xffffff, 0.4)
-    light.position.set(0, 35, 0)
+    const light = new THREE.PointLight(0xffffff, 1, 100)
+    light.position.set(0, 2, 0)
     mainObj.add(light)
+
+
     root.studio.addToScene(mainObj)
 
     const collisions = new helper_CollisionsItems_v02()
@@ -56,13 +59,13 @@ export function createPlayer (root) {
             savedPlayerSegmentKey = k
 
             collisions.clearArrCollisions()
-            collisions.setItemToCollision(root.appData.town[k].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ + 1}`].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ - 1}`].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ + 1}`].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
-            collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
+            root.appData.town[k] && collisions.setItemToCollision(root.appData.town[k].bCollision)
+            root.appData.town[`${keyX + 1}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ + 1}`].bCollision)
+            root.appData.town[`${keyX + 1}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ - 1}`].bCollision)
+            root.appData.town[`${keyX}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ + 1}`].bCollision)
+            root.appData.town[`${keyX}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
+            root.appData.town[`${keyX - 1}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
+            root.appData.town[`${keyX - 1}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
             collisions.setItemToCollision(root.cyberTruck.getCollBox())
         }
 

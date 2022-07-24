@@ -11,7 +11,7 @@ export function createLoadManager () {
 
     const assets = {}
 
-    let objLoader, textureLoader, gltfLoader, fbxLoader
+    let objLoader, textureLoader, gltfLoader, fbxLoader, cubeTextureLoader
     let index = 0
     let onLoad = () => {}
     let ASSETS_TO_LOAD = []
@@ -47,6 +47,7 @@ export function createLoadManager () {
         }        
         if (data.type === 'img') {
             textureLoader.load(data.filename, model => {
+                model.wrapS = model.wrapT = THREE.RepeatWrapping;
                 assets[data.key] = model
                 checkComplete()        
             })
@@ -58,6 +59,13 @@ export function createLoadManager () {
             gltfLoader.setDRACOLoader( dracoLoader )
 
             gltfLoader.load(data.filename, model => {
+                assets[data.key] = model
+                checkComplete()
+            })
+        }
+        if (data.type === 'cubeTextures') {
+            console.log(data)
+            cubeTextureLoader.load(data.filename, model => {
                 assets[data.key] = model
                 checkComplete()
             })
@@ -78,6 +86,7 @@ export function createLoadManager () {
             gltfLoader = new GLTFLoader();
             textureLoader = new THREE.TextureLoader();
             fbxLoader = new FBXLoader()
+            cubeTextureLoader = new THREE.CubeTextureLoader()
 
             loadAsset(ASSETS_TO_LOAD[index]);
         })

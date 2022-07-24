@@ -50,31 +50,23 @@ export function createStudio (emitterLink) {
 
   scene = new THREE.Scene()
   scene2 = new THREE.Scene()
-  //scene3 = new THREE.Scene()
 
-  //scene.background = 0x777777
-  const lightA = new THREE.AmbientLight( 0xffffff, 0.3 )
+  const lightA = new THREE.AmbientLight( 0x4c1200, 1 )
   lightA.position.set( 5, 5, 5 )
   scene.add( lightA )
-  const light = new THREE.PointLight( 0xffffff, 1, 1000 );
-  //light.position.set( 0, 50, 500);
-  light.position.set( 17, 25, 19);
+
+  const light = new THREE.PointLight( 0x5b7558, 2, 10000);
+  light.position.set( -1000, 100, 200);
   scene.add( light );
   scene.fog = new THREE.Fog(0x000000, 0, 200)
-  //const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-  //hemiLight.color.setHSL( 0.6, 1, 0.6 );
-  //hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-  //hemiLight.position.set( 0, 50, 0 );
-  //scene.add( hemiLight );
+
+  // const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+  // hemiLight.color.setHSL( 0.6, 1, 0.6 );
+  // hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+  // hemiLight.position.set( 0, 50, 0 );
+  // scene.add( hemiLight );
 
 
-  //const light2 = new THREE.PointLight( 0xffffff, 1, 1000 );
-  //light2.position.set( 0, 20, 100);
-  //scene2.add(light2)
-
-  //const lightA2 = new THREE.AmbientLight( 0xffffff, .5 )
-  //lightA2.position.set( 5, 5, 5 )
-  //scene2.add(lightA2)
 
   //const vertexShader = vSh;
   //const fragmentShader = fSh;
@@ -124,7 +116,7 @@ export function createStudio (emitterLink) {
     },
     setCamera: cam => {
       camera = cam
-      camera.add(light)
+      //camera.add(light)
       //scene.add(camera)
     },
 
@@ -138,5 +130,8 @@ export function createStudio (emitterLink) {
     addToScene2: mesh => {
       scene2.add(mesh)
     },
+    setBack: back => {
+      scene.background = back
+    }
   }
 }
