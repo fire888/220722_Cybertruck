@@ -1,7 +1,6 @@
 .hidden {
     display: none;
 }
-
 .start {
     min-height: 40px;
     min-width: 140px;
@@ -21,8 +20,6 @@
     background: url("../assets/startBtn.png") center no-repeat #192684;
     background-size: cover;
 }
-
-
 .control {
     max-width: 100px;
     max-height: 100px;
@@ -50,9 +47,6 @@
     background-size: contain;
     transform: rotate(180deg);
 }
-
-
-
 .arrow-left{
     left: -26px;
     bottom: 90px;
@@ -62,7 +56,6 @@
     background-size: contain;
     transform: rotate(-90deg);
 }
-
 .arrow-right {
     left: 35px;
     bottom: 90px;
