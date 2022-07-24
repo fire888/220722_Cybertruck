@@ -52,10 +52,9 @@ export const createTown = root => {
     }
 
 
-
     const instItems = {}
     root.assets.town.traverse(item => {
-        if (item.constructor.name === 'Mesh') {
+        if (item.geometry) {
             instItems[item.name] = item
         }
     })
