@@ -1,12 +1,12 @@
-export function startFrameUpater () {
-    var delta
-    var time
-    var oldTime
+export const startFrameUpdater = () => {
+    let delta
+    let time
+    let oldTime
 
     const fns = []
 
 
-    var animate = function () {
+    const animate = () => {
         requestAnimationFrame(animate)
       
         time = Date.now()
@@ -15,15 +15,13 @@ export function startFrameUpater () {
         for (let i = 0; i < fns.length; ++i) {
             fns[i](n)
         }
-        oldTime = time;
+        oldTime = time
     } 
 
     animate()
 
     return {
-        on: f => {
-            fns.push(f)
-        }
+        on: f => fns.push(f)
     }
 }
 

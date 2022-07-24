@@ -8,13 +8,6 @@ const MODEL_KEYS = [
     'build_04',
 ]
 
-// const TOWN = [
-//     3, 2, 1, 1, 1, 1,
-//     1, 1, 3, 1, 1, 1,
-//     1, 1, 1, 1, 2, 1,
-//     1, 2, 1, 1, 1, 1,
-//     1, 1, 1, 2, 1, 1,
-// ]
 const TOWN = []
 for (let i = 0; i < 200; ++i) {
     TOWN.push(Math.floor(Math.random() * MODEL_KEYS.length))
@@ -58,9 +51,9 @@ export const createTown = root => {
         }),
     }
 
+
+
     const instItems = {}
-
-
     root.assets.town.traverse(item => {
         if (item.constructor.name === 'Mesh') {
             instItems[item.name] = item
@@ -73,6 +66,8 @@ export const createTown = root => {
         mats['default']
     )
     root.studio.addToScene(ground)
+
+
 
     const items = {}
 

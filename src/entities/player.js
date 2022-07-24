@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { SEGMENT_SIZE } from '../constants/constants_assetsToLoad'
 import { helper_CollisionsItems_v02 } from '../helpers/CollisionsHelper'
 
-export function createPlayer (root) {
+export const createPlayer = root => {
     let keys = null
     let isOn = true
     let speed = .3
@@ -66,7 +66,7 @@ export function createPlayer (root) {
             root.appData.town[`${keyX}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
             root.appData.town[`${keyX - 1}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
             root.appData.town[`${keyX - 1}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
-            collisions.setItemToCollision(root.cyberTruck.getCollBox())
+            root.cyberTruck && collisions.setItemToCollision(root.cyberTruck.getCollBox())
         }
 
         const [is] = collisions.checkCollisions(camera, dirKeys[direction], 3)
@@ -107,11 +107,7 @@ export function createPlayer (root) {
                 mainObj.rotation.y -= 0.02 * n
             }
         },
-
-        getCamera: () => {
-            return camera;
-        },
-
+        getCamera: () => camera,
         getCollisionMesh: () => collisionBox
     }
 }

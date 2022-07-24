@@ -4,7 +4,6 @@ export class helper_CollisionsItems_v02 {
     constructor () {
         this._arrMeshes = []
 
-
         this._vecStart = new THREE.Vector3()
         this._vecDir = new THREE.Vector3()
         this._rayCaster = new THREE.Raycaster(this._vecStart, this._vecDir)
@@ -20,15 +19,9 @@ export class helper_CollisionsItems_v02 {
     }
 
 
-    removeItemFromCollision(mesh) {
-        this._arrMeshes = this._arrMeshes.filter(item => item !== mesh)
-    }
-
-
     clearArrCollisions () {
         this._arrMeshes = []
     }
-
 
     checkCollisions (objFrom, objTo, dist) {
         objFrom.getWorldPosition(this._vecStart)
@@ -40,9 +33,5 @@ export class helper_CollisionsItems_v02 {
             return [ true, intersects[0] ]
         }
         return [ false, null ]
-    }
-
-    getArr () {
-        return this._arrMeshes
     }
 }

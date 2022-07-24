@@ -68,23 +68,21 @@ export const createCyberTruck = (root) => {
     }
 
     const truck = root.assets.cyberTruck.scene.children[0]
-
-    const t1 = truck.children[0].children[0].children[0].children[0].children[5]
-    //t1.material.envMap = root.assets.skyBox
-    t1.material.reflectivity = 50
-    t1.material.shininess = 50
-
-    const t2 = truck.children[0].children[0].children[0].children[0].children[3]
-    //t2.material.envMap = root.assets.skyBox
-    t2.material.reflectivity = 50
-    t2.material.shininess = 50
-
-
     truck.scale.set(.01, .01, .01)
     truck.position.y = -2.4
     truck.position.z = 2
     truck.rotation.z = Math.PI / 2
     tr.add(truck)
+
+    const t1 = truck.children[0].children[0].children[0].children[0].children[5]
+    t1.material.reflectivity = 50
+    t1.material.shininess = 50
+
+    const t2 = truck.children[0].children[0].children[0].children[0].children[3]
+    t2.material.reflectivity = 50
+    t2.material.shininess = 50
+
+
 
 
     const collBox = new THREE.Mesh(
@@ -104,6 +102,9 @@ export const createCyberTruck = (root) => {
     tr.add(centerObj)
 
     const collision = new helper_CollisionsItems_v02()
+
+
+
 
     let currentIndexPath = 0
     let nextIndexPath = 1
@@ -143,6 +144,8 @@ export const createCyberTruck = (root) => {
     tr.lookAt(arrPoints[nextIndexPath])
 
 
+
+
     const savePos = new THREE.Vector3()
     const oldQ = new THREE.Quaternion()
     const newQ = new THREE.Quaternion()
@@ -168,6 +171,7 @@ export const createCyberTruck = (root) => {
         phaseRot = 0
     }
 
+
     return {
         update: n => {
             spotLight.rotation.y += 0.01
@@ -175,7 +179,6 @@ export const createCyberTruck = (root) => {
             if (is) {
                 return;
             }
-
 
             if (phaseRot < 1) {
                 phaseRot += (spdRot * n)

@@ -11,91 +11,58 @@ export function createKeyBoard (root) {
         'w': false,
     }
 
-    const keyUpdate = function ( keyCode, isDown ) {
+    const keyUpdate = (keyCode, isDown) => {
         switch( keyCode ) {
-          case 38:
-            keys['up'] = isDown
-            break
-          case 37:
-            keys['left'] = isDown
-            break
-          case 39:
-            keys['right'] = isDown
-            break
-           case 40:
-            keys['down'] = isDown
-            break
-           case 65:
+            case 38:
+                keys['up'] = isDown
+                break
+            case 37:
+                keys['left'] = isDown
+                break
+            case 39:
+                keys['right'] = isDown
+                break
+            case 40:
+                keys['down'] = isDown
+                break
+            case 65:
                 keys['left'] = isDown
                 break
             case 68:
                 keys['right'] = isDown
                 break
-          case 83:
-            keys['down'] = isDown
-            break
-          case 87:
-            keys['up'] = isDown
-            break
+            case 83:
+                keys['down'] = isDown
+                break
+            case 87:
+                keys['up'] = isDown
+                break
         }
         for (let i = 0; i < fns.length; ++i) {
             fns[i](keys)
         }
     }
 
-    document.addEventListener( 'keydown', 
-      function (event) { keyUpdate( event.keyCode, true )}.bind(this) )
-    document.addEventListener( 'keyup', 
-      function(event) { keyUpdate( event.keyCode, false )}.bind(this) )
+    document.addEventListener( 'keydown', e => keyUpdate(e.keyCode, true))
+    document.addEventListener( 'keyup', e => keyUpdate(e.keyCode, false))
 
-    const buttLeft = document.querySelector('.arrow-left')
-    if (buttLeft) {
-        buttLeft.addEventListener('mousedown',
-            function() { keyUpdate( 37, true ) })
-        buttLeft.addEventListener('mouseup',
-            function() { keyUpdate( 37, false ) })
-        buttLeft.addEventListener('touchstart',
-            function() { keyUpdate( 37, true ) })
-        buttLeft.addEventListener('touchend',
-            function() { keyUpdate( 37, false ) })
-    }
+    const arr = [
+        { domClass: '.arrow-left',  keyCode: 37, domElem: null },
+        { domClass: '.arrow-right',  keyCode: 39, domElem: null  },
+        { domClass: '.arrow-top',  keyCode: 38, domElem: null },
+        { domClass: '.arrow-bottom',  keyCode: 40, domElem: null },
+    ]
 
-    
-    const buttRight = document.querySelector('.arrow-right')
-    if (buttRight) {
-        buttRight.addEventListener('mousedown',
-            function() { keyUpdate( 39, true ) })
-        buttRight.addEventListener('mouseup',
-            function() { keyUpdate( 39, false ) })
-        buttRight.addEventListener('touchstart',
-            function() { keyUpdate( 39, true ) })
-        buttRight.addEventListener('touchend',
-            function() { keyUpdate( 39, false ) })
-    }
 
-        
-    const buttUp = document.querySelector('.arrow-top')
-    if (buttUp) {
-        buttUp.addEventListener('mousedown',
-            function() { keyUpdate( 38, true ) })
-        buttUp.addEventListener('mouseup',
-            function() { keyUpdate( 38, false ) })
-        buttUp.addEventListener('touchstart',
-            function() { keyUpdate( 38, true ) })
-        buttUp.addEventListener('touchend',
-            function() { keyUpdate( 38, false ) })
-    }
-
-    const buttDown = document.querySelector('.arrow-bottom')
-    if (buttDown) {
-        buttDown.addEventListener('mousedown',
-            function() { keyUpdate( 40, true ) })
-        buttDown.addEventListener('mouseup',
-            function() { keyUpdate( 40, false ) })
-        buttDown.addEventListener('touchstart',
-            function() { keyUpdate( 40, true ) })
-        buttDown.addEventListener('touchend',
-            function() { keyUpdate( 40, false ) })
+    for (let i = 0; i < arr.length; ++i) {
+        const elem = document.querySelector(arr[i].domClass)
+        if (elem) {
+            arr[i].domElem = elem
+            elem.addEventListener('mousedown', () => keyUpdate(arr[i].keyCode, true))
+            elem.addEventListener('mouseup', () => keyUpdate(arr[i].keyCode, false))
+            elem.addEventListener('touchstart', () => keyUpdate(arr[i].keyCode, true))
+            elem.addEventListener('touchend', () => keyUpdate( arr[i].keyCode, false))
+        }
     }
 
    return {
@@ -103,25 +70,11 @@ export function createKeyBoard (root) {
             fns.push(f)
         },
         show: () => {
-            if (buttLeft) {
-                if (root.device.deviceType !== 'desktop') {
-                    buttLeft.classList.remove('hidden')
-                }
+            if (root.device.deviceType === 'desktop') {
+                return;
             }
-            if (buttRight) {
-                if (root.device.deviceType !== 'desktop') {
-                    buttRight.classList.remove('hidden')
-                }
-            }
-            if (buttUp) {
-                if (root.device.deviceType !== 'desktop') {
-                    buttUp.classList.remove('hidden')
-                }
-            }
-            if (buttDown) {
-                if (root.device.deviceType !== 'desktop') {
-                    buttDown.classList.remove('hidden')
-                }
+            for (let i = 0; i < arr.length; ++i) {
+                arr[i].domElem.classList.remove('hidden')
             }
         }
    }

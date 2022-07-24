@@ -4,11 +4,8 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
-//'three/examples/js/loaders/GLTFLoader'
 
-
-export function createLoadManager () {
-
+export const createLoadManager = () => {
     const assets = {}
 
     let objLoader, textureLoader, gltfLoader, fbxLoader, cubeTextureLoader
@@ -26,7 +23,7 @@ export function createLoadManager () {
         }
     }
 
-    const loadAsset = function (data) {
+    const loadAsset = data => {
         if (data.type === 'obj') {
             objLoader.load(data.filename, model => {
                 assets[data.key] = model
@@ -73,21 +70,22 @@ export function createLoadManager () {
 
 
 
-    this.startLoad = (ASSETS_DATA) => {
-        return new Promise(res => {
-            
-            ASSETS_TO_LOAD = ASSETS_DATA
-            onLoad = res
-            index = 0
+    return {
+        startLoad: ASSETS_DATA => {
+            return new Promise(res => {
 
+                ASSETS_TO_LOAD = ASSETS_DATA
+                onLoad = res
+                index = 0
 
-            objLoader = new OBJLoader();
-            gltfLoader = new GLTFLoader();
-            textureLoader = new THREE.TextureLoader();
-            fbxLoader = new FBXLoader()
-            cubeTextureLoader = new THREE.CubeTextureLoader()
+                objLoader = new OBJLoader()
+                gltfLoader = new GLTFLoader()
+                textureLoader = new THREE.TextureLoader()
+                fbxLoader = new FBXLoader()
+                cubeTextureLoader = new THREE.CubeTextureLoader()
 
-            loadAsset(ASSETS_TO_LOAD[index]);
-        })
-    } 
+                loadAsset(ASSETS_TO_LOAD[index])
+            })
+        }
+    }
 }

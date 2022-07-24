@@ -100,25 +100,3 @@ const checkDeviceByUserAgent = () => {
 
     return { mode, isIphone, isChrome, isFirefox, isFirefoxIOS, isWebViewIOS }
 }
-
-
-
-const checkerIsMobileFireFox = () => {
-    const agent = navigator.userAgent.toLowerCase()
-    return agent.indexOf('firefox') >= 0 && agent.indexOf("android") >= 0
-}
-
-
-
-const checkIOSVersion = () => {
-    const agent = window.navigator.userAgent, start = agent.indexOf( `OS ` );
-
-    if ((agent.indexOf(`iPhone`) > -1 || agent.indexOf(`iPad`) > -1) && start > -1) {
-        return window.Number(agent.substr(start + 3, 3).replace(`_`, `.`));
-    }
-    if ((agent.indexOf(`Mac`) > -1) && start > -1) {
-        console.log(agent.substr(start + 4, 3))
-        return window.Number(agent.substr(start + 4, 3).replace(`_`, `.`));
-    }
-    return false;
-}

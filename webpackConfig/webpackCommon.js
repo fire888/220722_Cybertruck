@@ -1,32 +1,32 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
 	entry: './src/index.js',
 	module: {
 		rules: [
-			{ test: /\.txt$/, use: 'raw-loader' },
+			{
+			    test: /\.txt$/, use: 'raw-loader' },
 			{
                 test: /\.(png|svg|jpg|gif|ttf)$/,
                 use: [{
-                  loader: 'file-loader',
-                  options: {
-                    name: '[name].[ext]',
-                    outputPath: 'imgs/'
-                  }
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'imgs/'
+                    }
                 }]
             },
-              { test: /\.(obj|glb|gltf|FBX|bin)$/,
+            {
+                test: /\.(obj|glb|gltf|FBX|bin)$/,
                 use: [{
-                  loader: 'file-loader',
-                  options: {
-                    name: '[name].[ext]',
-                    outputPath: 'obj/'
-                  }
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'obj/'
+                    }
                 }]
-              },
+            },
             {
                 test: /\.css$/i,
                 use: [
@@ -45,4 +45,4 @@ module.exports = {
 			THREE: 'three'
 		})
 	]
-};
+}
