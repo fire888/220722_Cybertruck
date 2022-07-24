@@ -10,7 +10,7 @@ export function createPlayer (root) {
     const mainObj = new THREE.Object3D()
     const { startCarPoint } = root.appData
     mainObj.position.set(
-        startCarPoint.toArray()[0],
+        startCarPoint.toArray()[0] + (SEGMENT_SIZE[0] * 2),
         startCarPoint.toArray()[1],
         startCarPoint.toArray()[2] + 10,
     )
@@ -33,7 +33,7 @@ export function createPlayer (root) {
     const backObj = new THREE.Object3D()
     backObj.position.set(0, 1.8, 1)
     mainObj.add(backObj)
-    w
+
     const light = new THREE.PointLight(0xffffff, 0.4)
     light.position.set(0, 35, 0)
     mainObj.add(light)

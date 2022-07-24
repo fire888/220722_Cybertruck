@@ -34,20 +34,20 @@ export const createCyberTruck = (root) => {
         }
     }
 
+    const tr = new THREE.Group()
+
+    root.studio.addToScene(tr)
+    if (test) {
+        //tr.add(test)
+    }
 
     const truck = root.assets.cyberTruck.scene.children[0]
     truck.scale.set(.01, .01, .01)
     truck.position.y = -2.4
     truck.position.z = 2
     truck.rotation.z = Math.PI / 2
-
-
-    const tr = new THREE.Group()
     tr.add(truck)
-    root.studio.addToScene(tr)
-    if (test) {
-        //tr.add(test)
-    }
+
 
     const collBox = new THREE.Mesh(
         new THREE.BoxGeometry(4, 5, 6),
@@ -101,13 +101,15 @@ export const createCyberTruck = (root) => {
     }
 
     generateDataForMove()
+    tr.position.copy(arrPoints[currentIndexPath])
+    tr.lookAt(arrPoints[nextIndexPath])
 
 
     const savePos = new THREE.Vector3()
     const oldQ = new THREE.Quaternion()
     const newQ = new THREE.Quaternion()
     let spdRot = 0.05
-    let phaseRot = 0
+    let phaseRot = 1
 
     const generateDataForRot = () => {
         let nextNextPos
@@ -154,7 +156,6 @@ export const createCyberTruck = (root) => {
         },
         setPlayerToCollisions: (mesh) => {
             collision.setItemToCollision(mesh)
-            console.log(collision.getArr())
         },
         getCollBox: () => collBox,
     }

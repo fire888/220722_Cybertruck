@@ -1,4 +1,4 @@
-
+import { checkDevice } from './utils/checkDevice'
 import { showStartButton, hideStartScreen } from './ui/hideStartScreen'
 import { createStudio } from './entities/Studio'
 import { createKeyBoard } from './utils/createKeyBoard'
@@ -6,7 +6,6 @@ import { createLoadManager } from './helpers/LoadManager'
 import { createPlayer } from './entities/Player'
 import { createCamera } from './entities/Camera'
 import { startFrameUpater } from './utils/createFrameUpater'
-//import { createProjector } from './helpers/Projector'
 import { ASSETS_TO_LOAD } from './constants/constants_assetsToLoad'
 //import { createActions } from './actions/actions'
 import { createCyberTruck } from  './systems/cyberTruck'
@@ -23,6 +22,7 @@ const root = {
 /** INIT  ***********************************************************/
 
 const initApp = () => {
+  root.device = checkDevice()
   root.studio = createStudio(root.emitter)
   root.studio.initScene()
   root.keyboard = createKeyBoard(root)
@@ -53,7 +53,9 @@ const initApp = () => {
       root.studio.render()
       stats.update()
     })
-    hideStartScreen()
+    hideStartScreen(root, () => {
+      root.keyboard.show()
+    })
   })
 }
 

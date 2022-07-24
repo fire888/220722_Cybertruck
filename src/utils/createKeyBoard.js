@@ -1,5 +1,4 @@
 export function createKeyBoard (root) {
-
     const fns = []
 
     const keys = {
@@ -49,7 +48,7 @@ export function createKeyBoard (root) {
     document.addEventListener( 'keyup', 
       function(event) { keyUpdate( event.keyCode, false )}.bind(this) )
 
-    const buttLeft = document.querySelector('.butt-left')
+    const buttLeft = document.querySelector('.arrow-left')
     if (buttLeft) {
         buttLeft.addEventListener('mousedown',
             function() { keyUpdate( 37, true ) })
@@ -62,7 +61,7 @@ export function createKeyBoard (root) {
     }
 
     
-    const buttRight = document.querySelector('.butt-right')
+    const buttRight = document.querySelector('.arrow-right')
     if (buttRight) {
         buttRight.addEventListener('mousedown',
             function() { keyUpdate( 39, true ) })
@@ -75,7 +74,7 @@ export function createKeyBoard (root) {
     }
 
         
-    const buttUp = document.querySelector('.butt-front')
+    const buttUp = document.querySelector('.arrow-top')
     if (buttUp) {
         buttUp.addEventListener('mousedown',
             function() { keyUpdate( 38, true ) })
@@ -87,9 +86,43 @@ export function createKeyBoard (root) {
             function() { keyUpdate( 38, false ) })
     }
 
+    const buttDown = document.querySelector('.arrow-bottom')
+    if (buttDown) {
+        buttDown.addEventListener('mousedown',
+            function() { keyUpdate( 40, true ) })
+        buttDown.addEventListener('mouseup',
+            function() { keyUpdate( 40, false ) })
+        buttDown.addEventListener('touchstart',
+            function() { keyUpdate( 40, true ) })
+        buttDown.addEventListener('touchend',
+            function() { keyUpdate( 40, false ) })
+    }
+
    return {
         on: f => {
             fns.push(f)
+        },
+        show: () => {
+            if (buttLeft) {
+                if (root.device.deviceType !== 'desktop') {
+                    buttLeft.classList.remove('hidden')
+                }
+            }
+            if (buttRight) {
+                if (root.device.deviceType !== 'desktop') {
+                    buttRight.classList.remove('hidden')
+                }
+            }
+            if (buttUp) {
+                if (root.device.deviceType !== 'desktop') {
+                    buttUp.classList.remove('hidden')
+                }
+            }
+            if (buttDown) {
+                if (root.device.deviceType !== 'desktop') {
+                    buttDown.classList.remove('hidden')
+                }
+            }
         }
    }
 }

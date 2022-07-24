@@ -41,7 +41,7 @@ export function createStudio (emitterLink) {
     canvas: document.getElementById( 'webgl-canvas' ),
     antialias: true
   })
-  renderer.setClearColor(0x696c6d)
+  renderer.setClearColor(0x000000)
   renderer.autoClear = false
   renderer.autoClearColor = false
   renderer.autoClearStencil = false
@@ -60,7 +60,7 @@ export function createStudio (emitterLink) {
   //light.position.set( 0, 50, 500);
   light.position.set( 17, 25, 19);
   scene.add( light );
-  //scene.fog = new THREE.Fog(0x576066, 0, 400)
+  scene.fog = new THREE.Fog(0x000000, 0, 200)
   //const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
   //hemiLight.color.setHSL( 0.6, 1, 0.6 );
   //hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );

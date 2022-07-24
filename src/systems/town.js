@@ -16,7 +16,7 @@ const MODEL_KEYS = [
 //     1, 1, 1, 2, 1, 1,
 // ]
 const TOWN = []
-for (let i = 0; i < 1500; ++i) {
+for (let i = 0; i < 200; ++i) {
     TOWN.push(Math.floor(Math.random() * MODEL_KEYS.length))
 }
 const L = Math.sqrt(TOWN.length)
