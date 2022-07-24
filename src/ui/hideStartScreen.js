@@ -44,11 +44,11 @@ const openFullScreen = () => {
 export const hideStartScreen = (root, on) => {
     isAnimateLoader = false
     progressWrapper.classList.add('hidden')
-    if (root.device.deviceType === 'desktop') {
-      const startScreen = document.querySelector('.start-screen')
-      startScreen.style.display = 'none'
-      on()
-    } else {
+    // if (root.device.deviceType === 'desktop') {
+    //   const startScreen = document.querySelector('.start-screen')
+    //   startScreen.style.display = 'none'
+    //   on()
+    // } else {
       startButton.style.display = 'flex'
       startButton.classList.remove('hidden')
       startButton.addEventListener('click', () => {
@@ -57,7 +57,7 @@ export const hideStartScreen = (root, on) => {
         openFullScreen()
         on()
       })
-    }
+   // }
 }
 
 

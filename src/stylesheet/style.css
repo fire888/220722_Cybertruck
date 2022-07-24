@@ -8,22 +8,18 @@
     max-width: 140px;
     background-size: contain;
     border-radius: 3px;
-    border: 1px #c7ece8 solid;
+    border: 1px #83b1ff solid;
     cursor: pointer;
-    color: #c7ece8;
+    color: #83b1ff;
     justify-content: center;
     align-items: center;
+    background: url("../assets/startBtn.png") center no-repeat;
+    background-size: cover;
 }
 .start:hover {
-    min-height: 20px;
-    min-width: 140px;
-    max-width: 80px;
-    background-size: contain;
-    border-radius: 3px;
-    border: 1px #c7ece8 solid;
-    cursor: pointer;
     color: #343745;
-    background: #ececec;
+    background: url("../assets/startBtn.png") center no-repeat #192684;
+    background-size: cover;
 }
 
 

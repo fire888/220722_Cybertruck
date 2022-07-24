@@ -1,5 +1,5 @@
 import { checkDevice } from './utils/checkDevice'
-import { showStartButton, hideStartScreen } from './ui/hideStartScreen'
+import { hideStartScreen } from './ui/hideStartScreen'
 import { createStudio } from './entities/Studio'
 import { createKeyBoard } from './utils/createKeyBoard'
 import { createLoadManager } from './helpers/LoadManager'
@@ -7,11 +7,10 @@ import { createPlayer } from './entities/Player'
 import { createCamera } from './entities/Camera'
 import { startFrameUpater } from './utils/createFrameUpater'
 import { ASSETS_TO_LOAD } from './constants/constants_assetsToLoad'
-//import { createActions } from './actions/actions'
 import { createCyberTruck } from  './systems/cyberTruck'
 import { createTown } from './systems/town'
 
-import Stats from 'three/examples/jsm/libs/stats.module.js';
+//import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 
 const root = {
@@ -35,9 +34,9 @@ const initApp = () => {
   root.loadManager = new createLoadManager()
   root.loadManager.startLoad(ASSETS_TO_LOAD).then(assets => {
     root.studio.setBack(assets.skyBox)
-    const stats = new Stats()
-    const container = document.querySelector('.canvas-wrapper')
-    container.appendChild(stats.dom)
+    //const stats = new Stats()
+    //const container = document.querySelector('.canvas-wrapper')
+    //container.appendChild(stats.dom)
     
     root.assets = assets
     root.town = createTown(root)
@@ -52,13 +51,9 @@ const initApp = () => {
       root.player.update(n)
       root.cyberTruck.update(n)
       root.studio.render()
-      stats.update()
+      //stats.update()
     })
-    setTimeout(() => {
-      hideStartScreen(root, () => {
-        root.keyboard.show()
-      })
-    }, 15)
+      hideStartScreen(root, root.keyboard.show)
   })
 }
 
