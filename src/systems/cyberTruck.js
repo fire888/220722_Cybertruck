@@ -58,10 +58,9 @@ export const createCyberTruck = (root) => {
     shadow.position.x = -.4
     shadow.position.y = -1.3
     shadow.position.z = -3
-
     shadow.rotation.x = -Math.PI / 2
-
     tr.add(shadow)
+
 
     root.studio.addToScene(tr)
     if (test) {
@@ -69,6 +68,18 @@ export const createCyberTruck = (root) => {
     }
 
     const truck = root.assets.cyberTruck.scene.children[0]
+
+    const t1 = truck.children[0].children[0].children[0].children[0].children[5]
+    //t1.material.envMap = root.assets.skyBox
+    t1.material.reflectivity = 50
+    t1.material.shininess = 50
+
+    const t2 = truck.children[0].children[0].children[0].children[0].children[3]
+    //t2.material.envMap = root.assets.skyBox
+    t2.material.reflectivity = 50
+    t2.material.shininess = 50
+
+
     truck.scale.set(.01, .01, .01)
     truck.position.y = -2.4
     truck.position.z = 2
