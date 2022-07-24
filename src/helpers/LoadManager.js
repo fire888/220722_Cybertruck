@@ -64,7 +64,6 @@ export function createLoadManager () {
             })
         }
         if (data.type === 'cubeTextures') {
-            console.log(data)
             cubeTextureLoader.load(data.filename, model => {
                 assets[data.key] = model
                 checkComplete()

@@ -36,6 +36,33 @@ export const createCyberTruck = (root) => {
 
     const tr = new THREE.Group()
 
+    const spotLight = new THREE.SpotLight( 0xffffff, 3)
+    spotLight.position.set(-.5,1.5,5 )
+    spotLight.angle = 0.7
+    spotLight.penumbra = 0.4
+    spotLight.distance = 300
+    const target = new THREE.Object3D()
+    target.position.set(-.5, 1, 10)
+    tr.add(target)
+    spotLight.target = target
+    tr.add(spotLight)
+
+    const shadow = new THREE.Mesh(
+        new THREE.PlaneGeometry(8, 12),
+        new THREE.MeshBasicMaterial({
+            color: 0x0000,
+            alphaMap: root.assets.truckShadowMap,
+            transparent: true,
+        })
+    )
+    shadow.position.x = -.4
+    shadow.position.y = -1.3
+    shadow.position.z = -3
+
+    shadow.rotation.x = -Math.PI / 2
+
+    tr.add(shadow)
+
     root.studio.addToScene(tr)
     if (test) {
         //tr.add(test)
@@ -132,6 +159,7 @@ export const createCyberTruck = (root) => {
 
     return {
         update: n => {
+            spotLight.rotation.y += 0.01
             const [is] = collision.checkCollisions(centerObj, frontObj, 10)
             if (is) {
                 return;

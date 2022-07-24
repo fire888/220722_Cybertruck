@@ -60,37 +60,6 @@ export function createStudio (emitterLink) {
   scene.add( light );
   scene.fog = new THREE.Fog(0x000000, 0, 200)
 
-  // const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-  // hemiLight.color.setHSL( 0.6, 1, 0.6 );
-  // hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-  // hemiLight.position.set( 0, 50, 0 );
-  // scene.add( hemiLight );
-
-
-
-  //const vertexShader = vSh;
-  //const fragmentShader = fSh;
-  // const uniforms = {
-  //   'topColor': { value: new THREE.Color( 0x7bb9e5 ) },
-  //   //'bottomColor': { value: new THREE.Color( 0x7a8e90) },
-  //   'bottomColor': { value: new THREE.Color( 0x000000) },
-  //   'offset': { value: 66 },
-  //   'exponent': { value: 0.6 }
-  // };
-
- //scene.fog.color.copy( uniforms[ 'bottomColor' ].value );
-
-  //const skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
-  //const skyMat = new THREE.ShaderMaterial( {
-    //uniforms: uniforms,
-    //vertexShader: vertexShader,
-    //fragmentShader: fragmentShader,
-    //side: THREE.BackSide
-  //})
-
-  //const sky = new THREE.Mesh( skyGeo, skyMat )
-  //scene.add( sky )
-
 
   const resize = () => {
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -103,6 +72,7 @@ export function createStudio (emitterLink) {
 
 
   return {
+    light,
     render: () => {
       if (!camera ) {
         return;

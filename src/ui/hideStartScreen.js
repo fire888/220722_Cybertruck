@@ -42,7 +42,6 @@ const openFullScreen = () => {
 }
 
 export const hideStartScreen = (root, on) => {
-    console.log(root.device.deviceType)
     isAnimateLoader = false
     progressWrapper.classList.add('hidden')
     if (root.device.deviceType === 'desktop') {

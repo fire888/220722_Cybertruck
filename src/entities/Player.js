@@ -86,6 +86,7 @@ export function createPlayer (root) {
                 }
 
                 mainObj.translateZ(-speed * n)
+                root.studio.light.position.z = mainObj.position.z
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }
@@ -95,6 +96,7 @@ export function createPlayer (root) {
                 }
 
                 mainObj.translateZ(speed * n)
+                root.studio.light.position.z = mainObj.position.z
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }

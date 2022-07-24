@@ -21,6 +21,7 @@ import ny from '../assets/ny.jpg'
 import py from '../assets/py.jpg'
 
 import bumpMap from '../assets/bump.jpg'
+import truckShadow from '../assets/truckShadow.jpg'
 
 
 export const SEGMENT_SIZE = [40, 30]
@@ -63,6 +64,11 @@ export const ASSETS_TO_LOAD = [
         type: 'img',
         filename: b02ImgSrc,
         key: 'b02Map'
+    },
+    {
+        type: 'img',
+        filename: truckShadow,
+        key: 'truckShadowMap'
     },
     {
         type: 'cubeTextures',
