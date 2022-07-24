@@ -1,12 +1,12 @@
-export function createKeyBoard (eventEmitter) {
-    
-   // const emitter = eventEmitter
+export function createKeyBoard (root) {
+
     const fns = []
 
     const keys = {
         'up': false,
         'left': false,
         'right': false,
+        'down': false,
         's': false,
         'm': false,
         'w': false,
@@ -23,20 +23,25 @@ export function createKeyBoard (eventEmitter) {
           case 39:
             keys['right'] = isDown
             break
-          case 83:
-            keys['s'] = isDown
+           case 40:
+            keys['down'] = isDown
             break
-          case 77:
-            keys['m'] = isDown
+           case 65:
+                keys['left'] = isDown
+                break
+            case 68:
+                keys['right'] = isDown
+                break
+          case 83:
+            keys['down'] = isDown
             break
           case 87:
-            keys['w'] = isDown
+            keys['up'] = isDown
             break
         }
         for (let i = 0; i < fns.length; ++i) {
             fns[i](keys)
         }
-        //emitter.emit('keyEvent', keys)
     }
 
     document.addEventListener( 'keydown', 

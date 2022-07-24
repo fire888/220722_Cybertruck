@@ -3,14 +3,11 @@ import { SEGMENT_SIZE } from '../constants/constants_assetsToLoad'
 import { helper_CollisionsItems_v02 } from '../helpers/CollisionsHelper'
 
 export function createPlayer (root) {
-    let mainObj
-    let frontObj
-
     let keys = null
     let isOn = true
     let speed = .3
 
-    mainObj = new THREE.Object3D()
+    const mainObj = new THREE.Object3D()
     const { startCarPoint } = root.appData
     mainObj.position.set(
         startCarPoint.toArray()[0],
@@ -29,23 +26,49 @@ export function createPlayer (root) {
     collisionBox.visible = false
     root.studio.addToScene(collisionBox)
 
-    frontObj = new THREE.Object3D()
+    const frontObj = new THREE.Object3D()
     frontObj.position.set(0, 1.8, -1)
     mainObj.add(frontObj)
 
+    const backObj = new THREE.Object3D()
+    backObj.position.set(0, 1.8, 1)
+    mainObj.add(backObj)
+    w
     const light = new THREE.PointLight(0xffffff, 0.4)
     light.position.set(0, 35, 0)
     mainObj.add(light)
-
-    root.keyboard.on(data => {
-        keys = data
-        console.log(data)
-    })
-
     root.studio.addToScene(mainObj)
 
     const collisions = new helper_CollisionsItems_v02()
     let savedPlayerSegmentKey = null
+
+    root.keyboard.on(data => keys = data)
+    const dirKeys = {
+        'up': frontObj,
+        'down': backObj,
+    }
+    const checkSegmentAndCollision = (direction) => {
+        const keyX = Math.floor(mainObj.position.x / SEGMENT_SIZE[0])
+        const keyZ = Math.abs(Math.floor((mainObj.position.z) / SEGMENT_SIZE[1]))
+
+        const k = keyX + '_' + keyZ
+        if (savedPlayerSegmentKey !== k) {
+            savedPlayerSegmentKey = k
+
+            collisions.clearArrCollisions()
+            collisions.setItemToCollision(root.appData.town[k].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ + 1}`].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ - 1}`].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ + 1}`].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
+            collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
+            collisions.setItemToCollision(root.cyberTruck.getCollBox())
+        }
+
+        const [is] = collisions.checkCollisions(camera, dirKeys[direction], 3)
+        return is
+    }
 
 
     return {
@@ -55,29 +78,20 @@ export function createPlayer (root) {
             }
 
             if (keys['up'] === true) {
-                const keyX = Math.floor(mainObj.position.x / SEGMENT_SIZE[0])
-                const keyZ = Math.abs(Math.floor((mainObj.position.z) / SEGMENT_SIZE[1]))
-
-                const k = keyX + '_' + keyZ
-                if (savedPlayerSegmentKey !== k) {
-                    collisions.clearArrCollisions()
-                    collisions.setItemToCollision(root.appData.town[k].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ + 1}`].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ - 1}`].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ + 1}`].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
-                    collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
-                    collisions.setItemToCollision(root.cyberTruck.getCollBox())
-                    savedPlayerSegmentKey = k
-                }
-
-                const [is] = collisions.checkCollisions(camera, frontObj, 3)
-                if (is) {
+                if (checkSegmentAndCollision('up')) {
                     return;
                 }
 
                 mainObj.translateZ(-speed * n)
+                collisionBox.position.x = mainObj.position.x
+                collisionBox.position.z = mainObj.position.z
+            }
+            if (keys['down'] === true) {
+                if (checkSegmentAndCollision('down')) {
+                    return;
+                }
+
+                mainObj.translateZ(speed * n)
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }
