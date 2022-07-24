@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 
-export function createStudio () {
+export const createStudio = () => {
     let camera
 
     const renderer = new THREE.WebGLRenderer({
@@ -41,9 +41,6 @@ export function createStudio () {
                 return;
             }
             renderer.render(scene, camera)
-        },
-        initScene: () => {
-            resize()
         },
         setCamera: cam => {
             camera = cam

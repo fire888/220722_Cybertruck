@@ -16,7 +16,7 @@ export const createPlayer = root => {
     )
     mainObj.rotation.y = Math.PI / 2
 
-    const camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 )
+    const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0, 1.8, 0)
     mainObj.add(camera)
 
@@ -50,7 +50,7 @@ export const createPlayer = root => {
         'up': frontObj,
         'down': backObj,
     }
-    const checkSegmentAndCollision = (direction) => {
+    const checkSegmentAndCollision = direction => {
         const keyX = Math.floor(mainObj.position.x / SEGMENT_SIZE[0])
         const keyZ = Math.abs(Math.floor((mainObj.position.z) / SEGMENT_SIZE[1]))
 
@@ -59,13 +59,11 @@ export const createPlayer = root => {
             savedPlayerSegmentKey = k
 
             collisions.clearArrCollisions()
-            root.appData.town[k] && collisions.setItemToCollision(root.appData.town[k].bCollision)
-            root.appData.town[`${keyX + 1}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ + 1}`].bCollision)
-            root.appData.town[`${keyX + 1}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX + 1}_${keyZ - 1}`].bCollision)
-            root.appData.town[`${keyX}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ + 1}`].bCollision)
-            root.appData.town[`${keyX}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX}_${keyZ - 1}`].bCollision)
-            root.appData.town[`${keyX - 1}_${keyZ + 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ + 1}`].bCollision)
-            root.appData.town[`${keyX - 1}_${keyZ - 1}`] && collisions.setItemToCollision(root.appData.town[`${keyX - 1}_${keyZ - 1}`].bCollision)
+
+            const keys = generateKeysTown(keyX, keyZ)
+            for (let i = 0; i < keys.length; ++i) {
+                root.appData.town[keys[i]] && collisions.setItemToCollision(root.appData.town[keys[i]].bCollision)
+            }
             root.cyberTruck && collisions.setItemToCollision(root.cyberTruck.getCollBox())
         }
 
@@ -73,14 +71,13 @@ export const createPlayer = root => {
         return is
     }
 
-
     return {
         update: n => {
             if ( !keys || !isOn ) {
                 return;
             }
 
-            if (keys['up'] === true) {
+            if (keys['up']) {
                 if (checkSegmentAndCollision('up')) {
                     return;
                 }
@@ -90,7 +87,7 @@ export const createPlayer = root => {
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }
-            if (keys['down'] === true) {
+            if (keys['down']) {
                 if (checkSegmentAndCollision('down')) {
                     return;
                 }
@@ -100,10 +97,10 @@ export const createPlayer = root => {
                 collisionBox.position.x = mainObj.position.x
                 collisionBox.position.z = mainObj.position.z
             }
-            if (keys['left'] === true) {
+            if (keys['left']) {
                  mainObj.rotation.y += 0.02 * n
             }
-            if (keys['right'] === true) {
+            if (keys['right']) {
                 mainObj.rotation.y -= 0.02 * n
             }
         },
@@ -112,3 +109,14 @@ export const createPlayer = root => {
     }
 }
 
+
+
+const generateKeysTown = (kX, kZ) => {
+    const arr = []
+    for (let i = kX - 1; i < kX + 2; ++ i) {
+        for(let j = kZ - 1; j < kZ + 2; ++j) {
+            arr.push(`${i}_${j}`)
+        }
+    }
+    return arr
+}  

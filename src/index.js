@@ -18,7 +18,6 @@ const root = {
 const initApp = () => {
     root.device = checkDevice()
     root.studio = createStudio(root)
-    root.studio.initScene()
     root.keyboard = createKeyBoard(root)
     root.loadManager = createLoadManager()
 
