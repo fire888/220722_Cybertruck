@@ -2,13 +2,15 @@ import * as THREE from 'three'
 
 
 export const createStudio = () => {
-    let camera
+    let camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 1, 10000)
+    camera.position.set(0, 0, 30)
 
     const renderer = new THREE.WebGLRenderer({
         canvas: document.getElementById( 'webgl-canvas' ),
         antialias: true,
+        
     })
-    renderer.setClearColor(0x000000)
+    // srenderer.setClearColor(0x000000)
     renderer.setPixelRatio( window.devicePixelRatio)
     renderer.setSize( window.innerWidth, window.innerHeight )
 

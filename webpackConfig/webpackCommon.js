@@ -8,7 +8,7 @@ module.exports = {
 			{
 			    test: /\.txt$/, use: 'raw-loader' },
 			{
-                test: /\.(png|svg|jpg|gif|ttf)$/,
+                test: /\.(png|svg|jpg|jpeg|gif|ttf)$/,
                 use: [{
                     loader: 'file-loader',
                     options: {
