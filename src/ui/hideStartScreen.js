@@ -48,7 +48,7 @@ export const hideStartScreen = (root, on) => {
         startButton.addEventListener('click', () => {
             const startScreen = document.querySelector('.start-screen')
             startScreen.style.display = 'none'
-            //openFullScreen()
+            openFullScreen()
             on()
       })
 }

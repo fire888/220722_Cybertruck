@@ -84,9 +84,6 @@ export const createLoadManager = () => {
                 fbxLoader = new FBXLoader()
                 cubeTextureLoader = new THREE.CubeTextureLoader()
 
-                if (ASSETS_DATA.length === 0) {
-                    res({})
-                }
                 loadAsset(ASSETS_TO_LOAD[index])
             })
         }
